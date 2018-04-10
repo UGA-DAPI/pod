@@ -50,9 +50,21 @@ voir http://www.gnu.org/licenses/
 {% endblock %}
 
 {% block article %}
+    {% block carousel %}
+        <div id="objects_list_flatpage">
+            {% get_carousel_playlist %}
+        </div>
+    {% endblock carousel %}
     {% block article_content %}
         {{ flatpage.content }}
     {% endblock article_content %}
+    {% block channel_list %}
+
+        <div id="objects_list_flatpage">
+            {% get_official_channels %}
+        </div>
+    {% endblock channel_list %}
+    
     {% block video_list %}
         <h3>{% trans 'Here are the latest videos' %}</h3>
         <div id="objects_list_flatpage">
