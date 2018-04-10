@@ -58,6 +58,13 @@ pod_project/static/
 pod_project/pods/viewsv1.py
 *.bak
 .coverage
+bin/
+.Python
+pip-selfcheck.json
+lib/
+include/
+.gitignore
+
 
 # Theme files #
 ###############
