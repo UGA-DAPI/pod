@@ -17,7 +17,10 @@
 			    <img src="{{ p_video.video.thumbnail.url }}" alt="{{ p_video.video.title }}" style="width:100%"/>
 			  <div class="carousel-caption">
 				  <h4 >{{ p_video.video.title }}</h4>
-				  <p>{{ p_video.video.owner.username }}</p>
+				  <p>{% for contrib in video.contributorpods_set.all %}
+                                {% if contrib.email_address %}
+                             - {{ contrib.name }} ({% trans contrib.role %})
+                            {% endfor %}</p>
 			  </div>
 			    </a>
 		    </div>
