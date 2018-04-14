@@ -33,7 +33,7 @@ import random
 import datetime
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count, Case, When, IntegerField, Prefetch
-from pods.models import Pod, Playlist
+from pods.models import Channel, Pod, Playlist, PlaylistVideo
 
 register = Library()
 
@@ -50,14 +50,19 @@ HOMEPAGE_NBR_CONTENTS_SHOWN = getattr(settings, 'HOMEPAGE_NBR_CONTENTS_SHOWN', 1
 def get_official_channels():
     return {
         'channels': Channel.objects.filter(id__lt=9).exclude(
-            visible=0).order_by(
-             '+id').distinct(),
+            visible=0).order_by('id').distinct().annotate(video_count=Count("pod", distinct=True)),
         'DEFAULT_IMG': settings.DEFAULT_IMG
     }
 
 @register.inclusion_tag("playlists/playlist_carousel.html")
 def get_carousel_playlist():
+    info = Playlist.objects.get(id=1)
+    videos = PlaylistVideo.objects.filter(playlist=info)
+    playlist = {
+         'info': info,
+         'videos': videos
+    }
     return {
-        'playlists': Playlist.objects.filter(id=1)..distinct()[:HOMEPAGE_NBR_CONTENTS_SHOWN],
+        'playlist': playlist,
     }
 
